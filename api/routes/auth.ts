@@ -41,6 +41,8 @@ export const signUp = async (
   req: Request<{}, {}, SignUpRequestBody>,
   res: Response
 ) => {
+  console.log("signUp");
+
   const { firstname, lastname, email, password } = req.body;
 
   try {
@@ -66,6 +68,8 @@ export const logIn = async (
   req: Request<{}, {}, LogInRequestBody>,
   res: Response
 ) => {
+  console.log("logIn");
+
   const { email, password } = req.body;
 
   try {
@@ -89,6 +93,8 @@ export const generateNewAccessToken = async (
   req: Request<{}, {}, GenerateNewAccessTokenBody>,
   res: Response
 ) => {
+  console.log("generateNewAccessToken");
+
   const { refreshToken } = req.body;
 
   try {
@@ -110,6 +116,8 @@ export const logOut = async (
   req: Request<{}, {}, LogOutRequestBody>,
   res: Response
 ) => {
+  console.log("logOut");
+
   const { refreshToken } = req.body;
 
   try {
@@ -130,6 +138,8 @@ export const sendResetPasswordEmail = async (
   req: Request<{}, {}, SendResetPasswordEmailReqestBody>,
   res: Response
 ) => {
+  console.log("sendResetPasswordEmail");
+
   const { email } = req.body;
 
   try {
@@ -144,6 +154,8 @@ export const sendResetPasswordEmail = async (
 };
 
 export const getProfile = async (req: RequestWithUser, res: Response) => {
+  console.log("getProfile");
+
   const { userId } = req;
 
   if (!userId) {

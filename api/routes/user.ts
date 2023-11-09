@@ -20,6 +20,8 @@ export const updateUser = async (
   req: RequestWithUser<{}, {}, UpdateUserRequestBody>,
   res: Response
 ) => {
+  console.log("update user");
+
   // Let's be explicit to ensure we don't accidentally modify critical fields
   const { firstname, lastname, settings } = req.body;
 

@@ -44,6 +44,8 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(cors());
 app.use(express.json());
 
+app.get("/api/status", (req, res) => res.send({ status: "ok" }));
+
 app.post("/api/user", signUp);
 app.post("/api/auth/login", logIn);
 app.post("/api/auth/logout", logOut);
