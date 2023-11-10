@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import Sentry from "@sentry/node";
 
 interface RequestWithUser extends Request {
   userId?: string;
@@ -22,7 +23,7 @@ export const validateBearerToken = (
 
   if (!token || authHeader.split(" ")[0] !== "Bearer") {
     return res.status(401).json({
-      errorMessage: "Invalid authorization format. Expected: Bearer [token]",
+      errorMessage: "Invalid authorization format. Expected: Bearer [token]"
     });
   }
 
@@ -48,4 +49,20 @@ export const validateBearerToken = (
   }
 
   next();
+};
+
+export const gatewayKeyMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const apiKey = req.headers["X-CRYPTO-STDEV-API-GATEWAY-KEY"];
+
+  if (!apiKey || apiKey !== process.env.GATEWAY_API_KEY) {
+    Sentry.captureMessage("Invalid API key");
+
+    res.status(401).json({ error: "Invalid API key" });
+  } else {
+    next();
+  }
 };
