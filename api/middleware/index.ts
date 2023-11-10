@@ -61,9 +61,6 @@ export const gatewayKeyMiddleware = (
   const apiKey = req.get("X-CRYPTO-STDEV-API-GATEWAY-KEY");
 
   if (!apiKey || apiKey !== process.env.API_GATEWAY_KEY) {
-    console.log("apiKey:", apiKey);
-    console.log("process.env.API_GATEWAY_KEY:", process.env.API_GATEWAY_KEY);
-
     Sentry.captureMessage("Invalid API key");
 
     if (process.env.VALIDATE_API_GATEWAY_KEY === "false") {
