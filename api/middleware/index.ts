@@ -56,6 +56,8 @@ export const gatewayKeyMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("req.headers", req.headers);
+
   const apiKey = req.get("X-CRYPTO-STDEV-API-GATEWAY-KEY");
 
   if (!apiKey || apiKey !== process.env.API_GATEWAY_KEY) {
