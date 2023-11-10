@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import Sentry from "@sentry/node";
 
 interface RequestWithUser extends Request {
   userId?: string;
@@ -57,9 +58,11 @@ export const gatewayKeyMiddleware = (
 ) => {
   const apiKey = req.headers["X-CRYPTO-STDEV-API-GATEWAY-KEY"];
 
-  if (apiKey === process.env.GATEWAY_API_KEY) {
-    next();
-  } else {
+  if (!apiKey || apiKey !== process.env.GATEWAY_API_KEY) {
+    Sentry.captureMessage("Invalid API key");
+
     res.status(401).json({ error: "Invalid API key" });
+  } else {
+    next();
   }
 };
