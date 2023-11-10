@@ -22,7 +22,7 @@ export const validateBearerToken = (
 
   if (!token || authHeader.split(" ")[0] !== "Bearer") {
     return res.status(401).json({
-      errorMessage: "Invalid authorization format. Expected: Bearer [token]",
+      errorMessage: "Invalid authorization format. Expected: Bearer [token]"
     });
   }
 
@@ -48,4 +48,17 @@ export const validateBearerToken = (
   }
 
   next();
+};
+
+export const gatewayKeyMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const apiKey = req.get("X-API-KEY");
+  if (apiKey === process.env.GATEWAY_API_KEY) {
+    next();
+  } else {
+    res.status(401).json({ error: "Invalid API key" });
+  }
 };

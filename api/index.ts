@@ -11,7 +11,10 @@ import {
   signUp,
   getProfile
 } from "./routes/auth.js";
-import { validateBearerToken } from "./middleware/index.js";
+import {
+  gatewayKeyMiddleware,
+  validateBearerToken
+} from "./middleware/index.js";
 import { getPortfolio, updateUser } from "./routes/user.js";
 
 dotenv.config();
@@ -43,6 +46,9 @@ app.use(Sentry.Handlers.tracingHandler());
 
 app.use(cors());
 app.use(express.json());
+
+// Only allow requests is the X-API-KEY header is set to correct secret
+app.use(gatewayKeyMiddleware);
 
 app.get("/api/status", (req, res) => res.send({ status: "ok" }));
 
