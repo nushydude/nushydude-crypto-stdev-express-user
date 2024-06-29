@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@onesignal/node-onesignal": "^1.0.0-beta9",
-    "@sentry/node": "^7.23.0",
+    "@sentry/node": "^7.116.0",
     "@sentry/tracing": "^7.23.0",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
